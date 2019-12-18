@@ -1,36 +1,37 @@
 package dataStructure;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 
-public class DGraph implements graph{
+public class DGraph implements graph {
+
+	HashMap<Integer, nodeData> Graph = new HashMap<Integer, nodeData>();
 
 	@Override
 	public node_data getNode(int key) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.Graph.get(key);
+
 	}
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.Graph.get(src).getEdg(dest);
 	}
 
 	@Override
 	public void addNode(node_data n) {
-		// TODO Auto-generated method stub
-		
+		this.Graph.put(n.getKey(), (nodeData) n);
 	}
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		// TODO Auto-generated method stub
-		
+		this.Graph.get(src).addEdge(this.Graph.get(dest));
 	}
 
 	@Override
 	public Collection<node_data> getV() {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
