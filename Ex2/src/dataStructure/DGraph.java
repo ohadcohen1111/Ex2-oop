@@ -4,9 +4,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class DGraph implements graph {
+import utils.Point3D;
 
-	HashMap<Integer, nodeData> Graph = new HashMap<Integer, nodeData>();
+public class DGraph implements graph {
+	static int size_vertex = 0;
+	static int size_edge = 0;
+	private HashMap<Integer, nodeData> Graph = new HashMap<Integer, nodeData>();
+
+	public DGraph() {
+		;
+	}
 
 	@Override
 	public node_data getNode(int key) {
@@ -22,16 +29,20 @@ public class DGraph implements graph {
 	@Override
 	public void addNode(node_data n) {
 		this.Graph.put(n.getKey(), (nodeData) n);
+		size_vertex++;
 	}
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		this.Graph.get(src).addEdge(this.Graph.get(dest));
+		if (this.Graph.containsKey(src)) {
+			this.Graph.get(src).addEdge(this.Graph.get(dest));
+			size_edge++;
+		}
 	}
 
 	@Override
 	public Collection<node_data> getV() {
-	
+
 		return null;
 	}
 
@@ -43,7 +54,7 @@ public class DGraph implements graph {
 
 	@Override
 	public node_data removeNode(int key) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -71,4 +82,22 @@ public class DGraph implements graph {
 		return 0;
 	}
 
+	public String toString() {
+		String ans = "";
+		for (HashMap.Entry me : this.Graph.entrySet()) {
+			ans += me.getKey() + ", ";
+		}
+		return ans;
+	}
+
+	public static void main(String[] args) {
+		DGraph g = new DGraph();
+		Point3D p = new Point3D(1, 2, 3);
+		nodeData nd = new nodeData(1, p, 0);
+		nodeData nd1 = new nodeData(5, p, 0);
+		g.addNode(nd);
+		g.addNode(nd1);
+		g.connect(nd.getKey(), nd1.getKey(), 0);
+		System.out.println(g);
+	}
 }

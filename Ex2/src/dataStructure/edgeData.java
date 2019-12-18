@@ -16,7 +16,6 @@ public class edgeData implements edge_data {
 	 * 
 	 * @return
 	 */
-	// מאיזה קודקוד יוצאת
 	public int getSrc() {
 		return this.src.getKey();
 	}
@@ -42,7 +41,6 @@ public class edgeData implements edge_data {
 	 * 
 	 * @return
 	 */
-	// לקבל את המידע על הצלע, מאיפה נכנסת לאן יוצאת
 	public String getInfo() {
 		return null;
 	}

@@ -17,15 +17,22 @@ public class nodeData implements node_data {
 	}
 
 	public void addEdge(nodeData dest) {
-		this.edge.put(dest.key, new edgeData(this, dest, 0));
+		if (!edge.containsKey(dest.getKey())) {
+			this.edge.put(dest.key, new edgeData(this, dest, 0));
+		}
 	}
 
 	public void removeEdge(nodeData dest) {
-		this.edge.remove(dest.key);
+		if (edge.containsKey(dest.getKey())) {
+			this.edge.remove(dest.key);
+		}
 	}
 
 	public edgeData getEdg(int dest) {
-		return this.edge.get(dest);
+		if (edge.containsKey(dest)) {
+			return this.edge.get(dest);
+		}
+		return null;
 	}
 
 	/**
