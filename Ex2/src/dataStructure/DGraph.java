@@ -2,60 +2,91 @@ package dataStructure;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import utils.Point3D;
+import utils.StdDraw;
 
 public class DGraph implements graph {
-	static int size_vertex = 0;
-	static int size_edge = 0;
-	private HashMap<Integer, nodeData> Graph = new HashMap<Integer, nodeData>();
+	private HashMap<Integer, node_data> Vertex;
+	private HashMap<src_dest, edge_data> Edge;
+	private HashMap<Integer, HashMap<Integer, edge_data>> Neib;
+	static int MC = 0;
 
 	public DGraph() {
-		;
+		this.Vertex = new HashMap<Integer, node_data>();
+		this.Edge = new HashMap<src_dest, edge_data>();
+		this.Neib = new HashMap<Integer, HashMap<Integer, edge_data>>();
+
 	}
 
 	@Override
 	public node_data getNode(int key) {
-		return this.Graph.get(key);
-
+		return this.Vertex.get(key);
 	}
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
-		return this.Graph.get(src).getEdg(dest);
+		src_dest tmp = new src_dest(src, dest);
+		return this.Edge.get(tmp);
 	}
 
 	@Override
 	public void addNode(node_data n) {
-		this.Graph.put(n.getKey(), (nodeData) n);
-		size_vertex++;
+		if (!this.Vertex.containsKey(n.getKey())) {
+			this.Vertex.put(n.getKey(), n);
+		}
 	}
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		if (this.Graph.containsKey(src)) {
-			this.Graph.get(src).addEdge(this.Graph.get(dest));
-			size_edge++;
+		src_dest tmp = new src_dest(src, dest);
+		if (this.Vertex.containsKey(src) && this.Vertex.containsKey(dest)) { // check if the vertex are exists
+			if (!this.Edge.containsKey(tmp)) { // check if the edge is not already exits
+				node_data s = this.Vertex.get(src);
+				node_data d = this.Vertex.get(dest);
+				edge_data e = new edgeData(s, d, w);
+				this.Edge.put(tmp, e); // add new edge
+				HashMap<Integer, edge_data> t = new HashMap<>(); // add new neighbor
+				t.put(dest, e);
+				this.Neib.put(src, t);
+			}
 		}
 	}
 
 	@Override
 	public Collection<node_data> getV() {
-
-		return null;
+		Collection<node_data> V = this.Vertex.values();
+		return V;
 	}
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<edge_data> E = this.Neib.get(node_id).values();
+		return E;
 	}
 
 	@Override
 	public node_data removeNode(int key) {
-
+//		for (Entry<src_dest, edge_data> edge : this.Edge.entrySet()) {
+//			if (edge.getKey().getSrc() == key) {
+//				// Edge.remove(edge.getKey());
+//				edge.getKey().setSrc(0);
+//				edge.getKey().setDest(0);
+//				edge.setValue(null);
+//			}
+//		}
+//		src_dest tmp = new src_dest(0, 0);
+//		this.Edge.
+//
+//		// Edge.remove(edge.getKey().getSrc());
+//
+//		this.Vertex.remove(key);
+//		// this.Neib.remove(key);
 		return null;
+
 	}
 
 	@Override
@@ -66,38 +97,91 @@ public class DGraph implements graph {
 
 	@Override
 	public int nodeSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.Vertex.size();
 	}
 
 	@Override
 	public int edgeSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.Edge.size();
 	}
 
 	@Override
 	public int getMC() {
-		// TODO Auto-generated method stub
-		return 0;
+		return MC;
 	}
 
-	public String toString() {
-		String ans = "";
-		for (HashMap.Entry me : this.Graph.entrySet()) {
-			ans += me.getKey() + ", ";
+	public void draw() {
+		StdDraw.setCanvasSize(800, 400);
+		// scale
+		StdDraw.setXscale(0, 20);
+		StdDraw.setYscale(0, 20);
+		// point
+		StdDraw.setPenRadius(0.009);
+		for (Entry<Integer, node_data> vertex : this.Vertex.entrySet()) {
+			int x = vertex.getValue().getLocation().ix();
+			int y = vertex.getValue().getLocation().iy();
+			StdDraw.setPenColor(StdDraw.BLACK);
+			StdDraw.point(x, y);
 		}
-		return ans;
+		StdDraw.setPenRadius(0.00099);
+		StdDraw.setPenColor(StdDraw.DARK_GRAY);
+		for (Entry<src_dest, edge_data> edge : this.Edge.entrySet()) {
+			int x0 = Vertex.get(edge.getKey().getSrc()).getLocation().ix();
+			int y0 = Vertex.get(edge.getKey().getSrc()).getLocation().iy();
+			int x1 = Vertex.get(edge.getKey().getDest()).getLocation().ix();
+			int y1 = Vertex.get(edge.getKey().getDest()).getLocation().iy();
+			StdDraw.line(x0, y0, x1, y1);
+
+		}
 	}
 
 	public static void main(String[] args) {
-		DGraph g = new DGraph();
-		Point3D p = new Point3D(1, 2, 3);
-		nodeData nd = new nodeData(1, p, 0);
-		nodeData nd1 = new nodeData(5, p, 0);
-		g.addNode(nd);
-		g.addNode(nd1);
-		g.connect(nd.getKey(), nd1.getKey(), 0);
-		System.out.println(g);
+//		DGraph g = new DGraph();
+//		Point3D p = new Point3D(1, 2, 3);
+//		Point3D p1 = new Point3D(3, 4, 3);
+//		Point3D p2 = new Point3D(8, 11, 3);
+//		Point3D p3 = new Point3D(6, 1, 3);
+//		nodeData nd = new nodeData(p);
+//		nodeData nd1 = new nodeData(p1);
+//		nodeData nd2 = new nodeData(p2);
+//		nodeData nd3 = new nodeData(p3);
+//		g.addNode(nd);
+//		g.addNode(nd1);
+//		g.addNode(nd2);
+//		g.addNode(nd3);
+//		g.connect(nd.getKey(), nd1.getKey(), 0);
+//		g.connect(nd.getKey(), nd2.getKey(), 0);
+//		g.connect(nd.getKey(), nd3.getKey(), 0);
+//		// g.connect(nd2.getKey(), nd3.getKey(), 0);
+//		g.draw();
+		DGraph g1 = new DGraph();
+		Point3D p = new Point3D(1, 1, 3);
+		Point3D p1 = new Point3D(1, 4, 3);
+		Point3D p2 = new Point3D(1, 7, 3);
+		Point3D p3 = new Point3D(4, 7, 3);
+		Point3D p4 = new Point3D(4, 3, 3);
+		Point3D p5 = new Point3D(3, 1, 3);
+		nodeData nd = new nodeData(p);
+		nodeData nd1 = new nodeData(p1);
+		nodeData nd2 = new nodeData(p2);
+		nodeData nd3 = new nodeData(p3);
+		nodeData nd4 = new nodeData(p4);
+		nodeData nd5 = new nodeData(p5);
+		g1.addNode(nd);
+		g1.addNode(nd1);
+		g1.addNode(nd2);
+		g1.addNode(nd3);
+		g1.addNode(nd4);
+		g1.addNode(nd5);
+		g1.connect(nd3.getKey(), nd1.getKey(), 0);
+		g1.connect(nd3.getKey(), nd4.getKey(), 0);
+		g1.connect(nd5.getKey(), nd3.getKey(), 0);
+		g1.connect(nd5.getKey(), nd4.getKey(), 0);
+		// g1.draw();
+		g1.removeNode(nd3.getKey());
+		g1.draw();
+		System.out.println(g1.edgeSize());
+
 	}
+
 }
