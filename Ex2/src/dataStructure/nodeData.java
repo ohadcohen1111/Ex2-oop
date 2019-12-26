@@ -18,6 +18,14 @@ public class nodeData implements node_data {
 		this.info = "";
 	}
 
+	public nodeData(node_data other) {
+		this.location = other.getLocation();
+		this.weight = other.getWeight();
+		this.key = other.getKey();
+		this.tag = other.getTag();
+		this.info = other.getInfo();
+	}
+
 	public int getKey() {
 		return this.key;
 	}
