@@ -55,13 +55,4 @@ public class nodeData implements node_data {
 
 	}
 
-//	public void setNeib(node_data dest) {
-//		edge_data e = new edgeData(this, dest, 0);
-//		this.Neib.put(dest.getKey(), e);
-//	}
-//
-//	public edge_data getNeib(int dest) {
-//		return this.Neib.get(dest);
-//	}
-
 }

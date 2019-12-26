@@ -94,17 +94,13 @@ public class Graph_Algo implements graph_algorithms {
 	@Override
 	public boolean isConnected() {
 		Collection<node_data> vertex = this.Dgraph.getV();
-//		for (node_data ver : vertex) {
-//			Collection<edge_data> edge = this.Dgraph.getE(ver.getKey());
-//			if (edge == null) {
-//				return false;
-//			}
-//		}
-//		return true;
 		for (node_data ver : vertex) {
 			Collection<edge_data> edge = this.Dgraph.getE(ver.getKey());
-
+			if (edge == null) {
+				return false;
+			}
 		}
+		return true;
 	}
 
 	@Override
@@ -213,7 +209,7 @@ public class Graph_Algo implements graph_algorithms {
 
 		g1.connect(nd.getKey(), nd1.getKey(), 2);
 		g1.connect(nd1.getKey(), nd2.getKey(), 4);
-		g1.connect(nd2.getKey(), nd1.getKey(), 3);
+		g1.connect(nd2.getKey(), nd.getKey(), 3);
 
 		// g1.connect(nd5.getKey(), nd.getKey(), 0);
 		// System.out.println(g1.isConnected(nd2.getKey()));

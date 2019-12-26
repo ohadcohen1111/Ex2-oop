@@ -14,19 +14,12 @@ public class DGraph implements graph {
 	private HashMap<src_dest, edge_data> Edge;
 	private HashMap<Integer, HashMap<Integer, edge_data>> Neib;
 	static int MC = 0;
-<<<<<<< HEAD
 	static boolean flag = true;
-=======
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 
 	public DGraph() {
 		this.Vertex = new HashMap<Integer, node_data>();
 		this.Edge = new HashMap<src_dest, edge_data>();
 		this.Neib = new HashMap<Integer, HashMap<Integer, edge_data>>();
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 	}
 
 	@Override
@@ -51,7 +44,6 @@ public class DGraph implements graph {
 	public void connect(int src, int dest, double w) {
 		src_dest tmp = new src_dest(src, dest);
 		if (this.Vertex.containsKey(src) && this.Vertex.containsKey(dest)) { // check if the vertex are exists
-<<<<<<< HEAD
 			if (!this.Edge.containsKey(tmp)) {
 				node_data s = this.Vertex.get(src);
 				node_data d = this.Vertex.get(dest);
@@ -64,21 +56,6 @@ public class DGraph implements graph {
 				} else {
 					this.Neib.get(src).put(dest, e);
 				}
-=======
-			if (!this.Edge.containsKey(tmp)) { // check if the edge is not already exits
-				node_data s = this.Vertex.get(src);
-				node_data d = this.Vertex.get(dest);
-				edge_data e = new edgeData(s, d, w);
-				this.Edge.put(tmp, e); // add new edge
-				if (this.Neib.get(src) == null) {
-					HashMap<Integer, edge_data> t = new HashMap<>(); // add new neighbor
-					t.put(dest, e);
-					this.Neib.put(src, t);
-				}else {
-					this.Neib.get(src).put(dest, e);
-				}
-				
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 			}
 		}
 	}
@@ -91,7 +68,6 @@ public class DGraph implements graph {
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-<<<<<<< HEAD
 		if (Neib.get(node_id) == null) {
 			return null;
 		}
@@ -112,13 +88,6 @@ public class DGraph implements graph {
 			}
 		}
 		return flagDes;
-=======
-		if(Neib.get(node_id) == null) 
-			{
-			return null;
-			}
-		return Neib.get(node_id).values();
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 	}
 
 	@Override
@@ -134,10 +103,7 @@ public class DGraph implements graph {
 			if (key == (entry.getKey().getDest())) {
 				iterator.remove();
 				this.Neib.get(entry.getKey().getSrc()).remove(key);
-<<<<<<< HEAD
 				// removeEdge(entry.getKey().getSrc(), key);
-=======
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 			}
 		}
 		this.Vertex.remove(key);
@@ -148,30 +114,8 @@ public class DGraph implements graph {
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		src_dest tmp = new src_dest(src, dest);
-<<<<<<< HEAD
 		Edge.remove(tmp);
 		return this.Neib.get(src).remove(dest);
-=======
-		this.Neib.get(src).remove(dest);
-		return this.Edge.remove(tmp);
-		
-	}
-	
-	public boolean isConnected(int src) {
-		boolean flagDes = false;
-		if (this.Neib.containsKey(src)) {
-			Iterator<Map.Entry<src_dest, edge_data>> iterator = Edge.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Map.Entry<src_dest, edge_data> entry = iterator.next();
-				if (entry.getKey().getDest() == src) {
-					flagDes = true;
-					return flagDes;
-				}
-
-			}
-		}
-		return flagDes;
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 	}
 
 	@Override
@@ -246,7 +190,6 @@ public class DGraph implements graph {
 		nodeData nd3 = new nodeData(p3);
 		nodeData nd4 = new nodeData(p4);
 		nodeData nd5 = new nodeData(p5);
-<<<<<<< HEAD
 		//g1.addNode(nd);
 		//g1.addNode(nd1);
 		//g1.addNode(nd2);
@@ -272,23 +215,6 @@ public class DGraph implements graph {
 		// g1.removeEdge(nd3.getKey(), nd1.getKey());
 		// g1.draw();
 		// System.out.println(g1.getEdge(nd3.getKey(), nd1.getKey()));
-=======
-		g1.addNode(nd);
-		g1.addNode(nd1);
-		g1.addNode(nd2);
-		g1.addNode(nd3);
-		g1.addNode(nd4);
-		g1.addNode(nd5);
-		g1.connect(nd3.getKey(), nd1.getKey(), 0);
-		g1.connect(nd3.getKey(), nd4.getKey(), 0);
-		g1.connect(nd5.getKey(), nd3.getKey(), 0);
-		g1.connect(nd5.getKey(), nd4.getKey(), 0);
-		//g1.draw();
-		//g1.removeNode(nd3.getKey());
-		//g1.removeEdge(nd3.getKey(), nd1.getKey());
-		//System.out.println(g1.getEdge(nd3.getKey(), nd1.getKey()));
-  		 g1.draw();
->>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 		// System.out.println(g1.edgeSize());
 
 	}
