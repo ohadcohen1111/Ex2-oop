@@ -24,6 +24,7 @@ public class src_dest {
 	public void setDest(int dest) {
 		this.dest = dest;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public boolean equals(Object obj) {
@@ -44,4 +45,27 @@ public class src_dest {
 		result = Long.valueOf((prime * src) + (prime * dest)).hashCode(); // cunvert to long
 		return result;
 	}
+=======
+	
+	 public int hashCode() { // the hash function 
+	        final int prime = 31;
+	        int result = 1;
+	        int src = this.src;
+	        int dest = this.dest;
+	        result = Long.valueOf((prime * src) + (prime*dest)).hashCode(); //cunvert to long
+	        return result;
+	    }
+	 
+	 public boolean equals(Object obj) {
+	        if (this == obj)
+	            return true;
+	        if (obj == null)
+	            return false;
+	        if (getClass() != obj.getClass())
+	            return false;
+	        return true;
+	    }
+
+
+>>>>>>> branch 'master' of https://github.com/ohadcohen1111/Ex2-oop.git
 }
