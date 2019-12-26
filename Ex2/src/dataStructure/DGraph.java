@@ -206,7 +206,7 @@ public class DGraph implements graph {
 		//g1.removeNode(nd3.getKey());
 		//g1.removeEdge(nd3.getKey(), nd1.getKey());
 		//System.out.println(g1.getEdge(nd3.getKey(), nd1.getKey()));
- 		g1.draw();
+  		 g1.draw();
 		// System.out.println(g1.edgeSize());
 
 	}

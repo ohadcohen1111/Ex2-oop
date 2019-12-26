@@ -139,7 +139,7 @@ public class Graph_Algo implements graph_algorithms {
 			if (ver.getWeight() <= minWeight && (ver.getTag() == 0)) {
 				minWeight = ver.getWeight();
 				id = ver.getKey();
-			}
+			 }
 		}
 		return id;
 	}
