@@ -49,9 +49,14 @@ public class DGraph implements graph {
 				node_data d = this.Vertex.get(dest);
 				edge_data e = new edgeData(s, d, w);
 				this.Edge.put(tmp, e); // add new edge
-				HashMap<Integer, edge_data> t = new HashMap<>(); // add new neighbor
-				t.put(dest, e);
-				this.Neib.put(src, t);
+				if (this.Neib.get(src) == null) {
+					HashMap<Integer, edge_data> t = new HashMap<>(); // add new neighbor
+					t.put(dest, e);
+					this.Neib.put(src, t);
+				}else {
+					this.Neib.get(src).put(dest, e);
+				}
+				
 			}
 		}
 	}
@@ -64,35 +69,55 @@ public class DGraph implements graph {
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		Collection<edge_data> E = this.Neib.get(node_id).values();
-		return E;
+		if(Neib.get(node_id) == null) 
+			{
+			return null;
+			}
+		return Neib.get(node_id).values();
 	}
 
 	@Override
 	public node_data removeNode(int key) {
-//		for (Entry<src_dest, edge_data> edge : this.Edge.entrySet()) {
-//			if (edge.getKey().getSrc() == key) {
-//				// Edge.remove(edge.getKey());
-//				edge.getKey().setSrc(0);
-//				edge.getKey().setDest(0);
-//				edge.setValue(null);
-//			}
-//		}
-//		src_dest tmp = new src_dest(0, 0);
-//		this.Edge.
-//
-//		// Edge.remove(edge.getKey().getSrc());
-//
-//		this.Vertex.remove(key);
-//		// this.Neib.remove(key);
-		return null;
+		node_data nd = Vertex.get(key);
+		Iterator<Map.Entry<src_dest, edge_data>> iterator = Edge.entrySet().iterator();
 
+		while (iterator.hasNext()) {
+			Map.Entry<src_dest, edge_data> entry = iterator.next();
+			if (key == (entry.getKey().getSrc())) {
+				iterator.remove();
+			}
+			if (key == (entry.getKey().getDest())) {
+				iterator.remove();
+				this.Neib.get(entry.getKey().getSrc()).remove(key);
+			}
+		}
+		this.Vertex.remove(key);
+		this.Neib.remove(key);
+		return nd;
 	}
 
 	@Override
 	public edge_data removeEdge(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
+		src_dest tmp = new src_dest(src, dest);
+		this.Neib.get(src).remove(dest);
+		return this.Edge.remove(tmp);
+		
+	}
+	
+	public boolean isConnected(int src) {
+		boolean flagDes = false;
+		if (this.Neib.containsKey(src)) {
+			Iterator<Map.Entry<src_dest, edge_data>> iterator = Edge.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<src_dest, edge_data> entry = iterator.next();
+				if (entry.getKey().getDest() == src) {
+					flagDes = true;
+					return flagDes;
+				}
+
+			}
+		}
+		return flagDes;
 	}
 
 	@Override
@@ -177,10 +202,12 @@ public class DGraph implements graph {
 		g1.connect(nd3.getKey(), nd4.getKey(), 0);
 		g1.connect(nd5.getKey(), nd3.getKey(), 0);
 		g1.connect(nd5.getKey(), nd4.getKey(), 0);
-		// g1.draw();
-		g1.removeNode(nd3.getKey());
-		g1.draw();
-		System.out.println(g1.edgeSize());
+		//g1.draw();
+		//g1.removeNode(nd3.getKey());
+		//g1.removeEdge(nd3.getKey(), nd1.getKey());
+		//System.out.println(g1.getEdge(nd3.getKey(), nd1.getKey()));
+ 		g1.draw();
+		// System.out.println(g1.edgeSize());
 
 	}
 
