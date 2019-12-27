@@ -3,10 +3,10 @@ this project represent a directional weighted graph, and A number of algorithms 
 
 **package dataStructure:**  
 
-**nodeData**: this class implemens node_data interface.   
+**nodeData**: this class implements node_data interface.   
 nodeData represents the set of operations applicable on a node (vertex) in a (directional) weighted graph.  
 
-**edgeData**: this class implemens edge_data interface.   
+**edgeData**: this class implements edge_data interface.   
 edgrData represents the set of operations applicable on a directional edge(src,dest) in a (directional) weighted graph.  
 
 **DGraph**: this class implemens graph interface.  
@@ -14,7 +14,7 @@ DGraph represents a directional weighted graph,  should support a large number o
 
 **package algorithems:**    
 
-**Graph-Algo**: this class implement graph-algorithems interface.  
+**Graph-Algo**: this class implements graph-algorithems interface.  
 Graph-Algo represents the "regular" Graph Theory algorithms including:
  0. clone();
  1. init(String file_name);
