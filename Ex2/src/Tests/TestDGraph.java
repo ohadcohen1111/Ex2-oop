@@ -73,7 +73,7 @@ public class TestDGraph {
 		for (int i = 0; i < nodes.length; i++) {
 			g.addNode(nodes[i]);
 		}
- 
+  
 		edgeData e = new edgeData(n, n1, 6);
 		edgeData e1 = new edgeData(n1, n2, 11.2);
 		edgeData e2 = new edgeData(n, n5, 5.3);

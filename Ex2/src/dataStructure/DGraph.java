@@ -97,7 +97,7 @@ public class DGraph implements graph {
 		}
 		throw new RuntimeException("The egde doesnt exists");
 	}
-
+ 
 	@Override
 	public int nodeSize() {
 		return this.Vertex.size();

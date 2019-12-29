@@ -48,7 +48,7 @@ public class TestGraphAlgo {
 		for (int i = 0; i < nodes.length; i++) {
 			g.addNode(nodes[i]);
 		}
- 
+  
 		g.connect(n.getKey(), n1.getKey(), 6);
 		g.connect(n1.getKey(), n2.getKey(), 11.2);
 		g.connect(n.getKey(), n5.getKey(), 5.3);
