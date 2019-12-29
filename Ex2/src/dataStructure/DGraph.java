@@ -74,7 +74,7 @@ public class DGraph implements graph {
 
 	@Override
 	public node_data removeNode(int key) {
-		if (!Vertex.containsKey(key)) {
+		if (!Vertex.containsKey(key)) { 
 			return null;
 		}
 		node_data nd = Vertex.get(key);
