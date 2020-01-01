@@ -18,7 +18,6 @@ public class TestDGraph {
 
 	@Test
 	public void testAddNode() {
-		Graph_Algo ga = new Graph_Algo();
 		DGraph g = new DGraph();
 		Point3D p = new Point3D(5, 7);
 		Point3D p1 = new Point3D(2.3, 4.6);
@@ -73,7 +72,7 @@ public class TestDGraph {
 		for (int i = 0; i < nodes.length; i++) {
 			g.addNode(nodes[i]);
 		}
-  
+
 		edgeData e = new edgeData(n, n1, 6);
 		edgeData e1 = new edgeData(n1, n2, 11.2);
 		edgeData e2 = new edgeData(n, n5, 5.3);

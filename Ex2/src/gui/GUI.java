@@ -36,8 +36,8 @@ public class GUI {
 				maxY = vertex.getLocation().iy();
 			}
 		}
-		StdDraw.setXscale(0, maxX + 7);
-		StdDraw.setYscale(0, maxY + 7);
+		StdDraw.setXscale(-4, maxX + 7);
+		StdDraw.setYscale(-4, maxY + 7);
 
 	}
 
@@ -148,37 +148,99 @@ public class GUI {
 	}
 
 	public static void main(String[] args) {
-		DGraph g1 = new DGraph();
-		Point3D p = new Point3D(1, 1, 3);
-		Point3D p1 = new Point3D(1, 4, 3);
-		Point3D p2 = new Point3D(1, 7, 3);
-		Point3D p3 = new Point3D(4, 7, 3);
-		Point3D p4 = new Point3D(4, 3, 3);
-		Point3D p5 = new Point3D(3, 1, 3);
-		nodeData nd = new nodeData(p);
-		nodeData nd1 = new nodeData(p1);
-		nodeData nd2 = new nodeData(p2);
-		nodeData nd3 = new nodeData(p3);
-		nodeData nd4 = new nodeData(p4);
-		nodeData nd5 = new nodeData(p5);
-		g1.addNode(nd);
-		g1.addNode(nd1);
-		g1.addNode(nd2);
-		g1.addNode(nd3);
-		g1.addNode(nd4);
-		g1.addNode(nd5);
-		g1.connect(nd3.getKey(), nd1.getKey(), 3);
-		g1.connect(nd3.getKey(), nd4.getKey(), 0.5);
-		g1.connect(nd5.getKey(), nd3.getKey(), 5);
-		g1.connect(nd5.getKey(), nd4.getKey(), 4);
-		g1.connect(nd4.getKey(), nd2.getKey(), 0.5);
-		g1.connect(nd5.getKey(), nd.getKey(), 1);
-		g1.connect(nd2.getKey(), nd1.getKey(), 0.5);
-		g1.connect(nd.getKey(), nd4.getKey(), 6);
+//		DGraph g1 = new DGraph();
+//		Point3D p = new Point3D(1, 1, 3);
+//		Point3D p1 = new Point3D(1, 4, 3);
+//		Point3D p2 = new Point3D(1, 7, 3);
+//		Point3D p3 = new Point3D(4, 7, 3);
+//		Point3D p4 = new Point3D(4, 3, 3);
+//		Point3D p5 = new Point3D(3, 1, 3);
+//		nodeData nd = new nodeData(p);
+//		nodeData nd1 = new nodeData(p1);
+//		nodeData nd2 = new nodeData(p2);
+//		nodeData nd3 = new nodeData(p3);
+//		nodeData nd4 = new nodeData(p4);
+//		nodeData nd5 = new nodeData(p5);
+//		g1.addNode(nd);
+//		g1.addNode(nd1);
+//		g1.addNode(nd2);
+//		g1.addNode(nd3);
+//		g1.addNode(nd4);
+//		g1.addNode(nd5);
+//		g1.connect(nd3.getKey(), nd1.getKey(), 3);
+//		g1.connect(nd3.getKey(), nd4.getKey(), 0.5);
+//		g1.connect(nd5.getKey(), nd3.getKey(), 5);
+//		g1.connect(nd5.getKey(), nd4.getKey(), 4);
+//		g1.connect(nd4.getKey(), nd2.getKey(), 0.5);
+//		g1.connect(nd5.getKey(), nd.getKey(), 1);
+//		g1.connect(nd2.getKey(), nd1.getKey(), 0.5);
+//		g1.connect(nd.getKey(), nd4.getKey(), 6);
 
 		// g1.draw();
 		// Graph_Algo g = new Graph_Algo();
-		GUI d = new GUI(g1);
+
+//		DGraph g = new DGraph();
+//		Point3D p = new Point3D(3, 5);
+//		Point3D p1 = new Point3D(1, 4);
+//		Point3D p2 = new Point3D(2, 8);
+//		Point3D p3 = new Point3D(11, 5);
+//
+//		node_data n = new nodeData(p);
+//		node_data n1 = new nodeData(p1);
+//		node_data n2 = new nodeData(p2);
+//		node_data n3 = new nodeData(p3);
+//
+//		node_data[] nodes = { n, n1, n2, n3 };
+//
+//		for (int i = 0; i < nodes.length; i++) {
+//			g.addNode(nodes[i]);
+//		}
+//		for (int i = 0; i < g.nodeSize(); i++) {
+//			for (int j = 1; j < g.nodeSize(); j++) {
+//				if (nodes[i].getKey() != nodes[j].getKey()) {
+//					double weight = (int) (Math.random() * (14 - 1) + 1);
+//					g.connect(nodes[i].getKey(), nodes[j].getKey(), weight);
+//					g.connect(nodes[j].getKey(), nodes[i].getKey(), weight);
+//				}
+//			}
+//		}
+
+		DGraph g = new DGraph();
+		Point3D p = new Point3D(3, 1.7);
+		Point3D p1 = new Point3D(8.12, 6.33);
+		Point3D p2 = new Point3D(2.5, 5);
+		Point3D p3 = new Point3D(11, 7.7);
+		Point3D p4 = new Point3D(2, 2);
+		Point3D p5 = new Point3D(2.5, 12);
+		node_data n = new nodeData(p);
+		node_data n1 = new nodeData(p1);
+		node_data n2 = new nodeData(p2);
+		node_data n3 = new nodeData(p3);
+		node_data n4 = new nodeData(p4);
+		node_data n5 = new nodeData(p5);
+		node_data[] nodes = { n, n1, n2, n3, n4, n5 };
+
+		for (int i = 0; i < nodes.length; i++) {
+			g.addNode(nodes[i]);
+		}
+
+		g.connect(n.getKey(), n1.getKey(), 3);
+		g.connect(n1.getKey(), n2.getKey(), 4);
+		g.connect(n.getKey(), n5.getKey(), 10);
+		g.connect(n.getKey(), n2.getKey(), 2);
+		g.connect(n2.getKey(), n5.getKey(), 5);
+		g.connect(n4.getKey(), n.getKey(), 0.5);
+		g.connect(n4.getKey(), n5.getKey(), 13);
+		g.connect(n3.getKey(), n.getKey(), 4.5);
+		g.connect(n2.getKey(), n4.getKey(), 8);
+		g.connect(n5.getKey(), n4.getKey(), 11);
+		g.connect(n.getKey(), n3.getKey(), 4);
+		g.connect(n1.getKey(), n3.getKey(), 0.5);
+		Graph_Algo ga = new Graph_Algo();
+		ga.init(g);
+		GUI d = new GUI(g);
 		d.draw();
+		System.out.println(ga.isConnected());
+		System.out.println(ga.shortestPath(1, 4));
 	}
 }

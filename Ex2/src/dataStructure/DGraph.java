@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import gui.GUI;
 import utils.Point3D;
 import utils.StdDraw;
 
@@ -74,7 +75,7 @@ public class DGraph implements graph {
 
 	@Override
 	public node_data removeNode(int key) {
-		if (!Vertex.containsKey(key)) { 
+		if (!Vertex.containsKey(key)) {
 			return null;
 		}
 		node_data nd = Vertex.get(key);
@@ -97,7 +98,7 @@ public class DGraph implements graph {
 		}
 		throw new RuntimeException("The egde doesnt exists");
 	}
- 
+
 	@Override
 	public int nodeSize() {
 		return this.Vertex.size();
@@ -115,66 +116,6 @@ public class DGraph implements graph {
 	@Override
 	public int getMC() {
 		return mc;
-	}
-
-	public static void main(String[] args) {
-//		DGraph g = new DGraph();
-//		Point3D p = new Point3D(1, 2, 3);
-//		Point3D p1 = new Point3D(3, 4, 3);
-//		Point3D p2 = new Point3D(8, 11, 3);
-//		Point3D p3 = new Point3D(6, 1, 3);
-//		nodeData nd = new nodeData(p);
-//		nodeData nd1 = new nodeData(p1);
-//		nodeData nd2 = new nodeData(p2);
-//		nodeData nd3 = new nodeData(p3);
-//		g.addNode(nd);
-//		g.addNode(nd1);
-//		g.addNode(nd2);
-//		g.addNode(nd3);
-//		g.connect(nd.getKey(), nd1.getKey(), 0);
-//		g.connect(nd.getKey(), nd2.getKey(), 0);
-//		g.connect(nd.getKey(), nd3.getKey(), 0);
-//		// g.connect(nd2.getKey(), nd3.getKey(), 0);
-//		g.draw();
-//		DGraph g1 = new DGraph();
-//		Point3D p = new Point3D(1, 1, 3);
-//		Point3D p1 = new Point3D(1, 4, 3);
-//		Point3D p2 = new Point3D(1, 7, 3);
-//		Point3D p3 = new Point3D(4, 7, 3);
-//		Point3D p4 = new Point3D(4, 3, 3);
-//		Point3D p5 = new Point3D(3, 1, 3);
-//		nodeData nd = new nodeData(p);
-//		nodeData nd1 = new nodeData(p1);
-//		nodeData nd2 = new nodeData(p2);
-//		nodeData nd3 = new nodeData(p3);
-//		nodeData nd4 = new nodeData(p4);
-//		nodeData nd5 = new nodeData(p5);
-//		g1.addNode(nd);
-//		g1.addNode(nd1);
-//		g1.addNode(nd2);
-//		g1.addNode(nd3);
-//		g1.addNode(nd4);
-//		g1.addNode(nd5);
-//		g1.connect(nd3.getKey(), nd1.getKey(), 0);
-//		g1.connect(nd3.getKey(), nd4.getKey(), 0);
-//		g1.connect(nd5.getKey(), nd3.getKey(), 0);
-//		g1.connect(nd5.getKey(), nd4.getKey(), 0);
-//		g1.connect(nd4.getKey(), nd2.getKey(), 0);
-//		g1.connect(nd5.getKey(), nd.getKey(), 0);
-//		g1.connect(nd.getKey(), nd4.getKey(), 0);
-//
-//		g1.connect(nd4.getKey(), nd3.getKey(), 0);
-
-		// g1.connect(nd5.getKey(), nd.getKey(), 0);
-		// System.out.println(g1.isConnected(nd2.getKey()));
-		// g1.draw();
-		// g1.removeNode(nd3.getKey());
-		// g1.draw();
-		// g1.removeEdge(nd3.getKey(), nd1.getKey());
-		// g1.draw();
-		// System.out.println(g1.getEdge(nd3.getKey(), nd1.getKey()));
-		// System.out.println(g1.edgeSize());
-
 	}
 
 }

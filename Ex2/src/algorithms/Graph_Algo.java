@@ -1,16 +1,17 @@
 package algorithms;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import dataStructure.DGraph;
 import dataStructure.edgeData;
 import dataStructure.edge_data;
@@ -27,7 +28,7 @@ import gui.GUI;
  * @author
  *
  */
-public class Graph_Algo implements graph_algorithms {
+public class Graph_Algo implements graph_algorithms, Serializable {
 	final int INFINITE = Integer.MAX_VALUE;
 	private graph Dgraph;
 
@@ -160,26 +161,28 @@ public class Graph_Algo implements graph_algorithms {
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
+		if (!this.isConnected()) {
+			return null;
+		}
+		double minDist = INFINITE;
+		List<node_data> res = new ArrayList<node_data>();
+		int[][] greatPath = new int[2][targets.size() - 1];
 		List<node_data> smallestPath = new ArrayList<node_data>();
 		Collection<node_data> vertex = this.Dgraph.getV();
-		double currentPath = 0;
-		double currentPathBack = 0;
-		double weightSmall = INFINITE;
-		for (int i = 0; i < targets.size() - 1; i++) {
-			for (int j = 1; j < targets.size(); j++) {
-				currentPath = shortestPathDist(targets.get(i), targets.get(j));
-				currentPathBack = shortestPathDist(targets.get(i), targets.get(j));
-				currentPath += Math.min(currentPath, currentPathBack);
-				smallestPath.add(shortestPath(targets.get(i), targets.get(j)).get(j));
-				if (currentPath < weightSmall) {
-					weightSmall = currentPath;
+		for (int i = 0; i < targets.size(); i++) {
+			for (int j = 0; j < targets.size(); j++) {
+				double currentRes = shortestPathDist(targets.get(i), targets.get(j));
+				if (currentRes < minDist && currentRes != 0) {
+					minDist = currentRes;
+					smallestPath = shortestPath(targets.get(i), targets.get(j));
+					greatPath[0][i] = targets.get(i);
+					greatPath[1][i] = targets.get(j);
 				}
 			}
+			targets.remove(i);
 		}
-		for (int i = 0; i < smallestPath.size(); i++) {
-			System.out.println(smallestPath.get(i).getKey());
-		}
-		return smallestPath;
+
+		return null;
 	}
 
 	@Override
@@ -199,64 +202,6 @@ public class Graph_Algo implements graph_algorithms {
 			}
 		}
 		return copy;
-	}
-
-	public static void main(String[] args) {
-		DGraph g1 = new DGraph();
-		Point3D p = new Point3D(1, 1, 3);
-		Point3D p1 = new Point3D(1, 4, 3);
-		Point3D p2 = new Point3D(1, 7, 3);
-		Point3D p3 = new Point3D(4, 7, 3);
-		Point3D p4 = new Point3D(4, 3, 3);
-		Point3D p5 = new Point3D(3, 1, 3);
-		nodeData nd = new nodeData(p);
-		nodeData nd1 = new nodeData(p1);
-		nodeData nd2 = new nodeData(p2);
-		nodeData nd3 = new nodeData(p3);
-		nodeData nd4 = new nodeData(p4);
-		nodeData nd5 = new nodeData(p5);
-		g1.addNode(nd);
-		g1.addNode(nd1);
-		g1.addNode(nd2);
-		g1.addNode(nd3);
-		g1.addNode(nd4);
-		g1.addNode(nd5);
-		g1.connect(nd3.getKey(), nd1.getKey(), 3);
-		g1.connect(nd3.getKey(), nd4.getKey(), 0.5);
-		g1.connect(nd5.getKey(), nd3.getKey(), 5);
-		g1.connect(nd5.getKey(), nd4.getKey(), 4);
-		g1.connect(nd4.getKey(), nd2.getKey(), 0.5);
-		g1.connect(nd5.getKey(), nd.getKey(), 1);
-		g1.connect(nd.getKey(), nd4.getKey(), 6);
-		g1.connect(nd2.getKey(), nd1.getKey(), 0.5);
-		g1.connect(nd4.getKey(), nd.getKey(), 3.5);
-
-		// g1.connect(nd4.getKey(), nd3.getKey(), 0.5);
-
-		g1.connect(nd.getKey(), nd1.getKey(), 2);
-		g1.connect(nd1.getKey(), nd2.getKey(), 4);
-		g1.connect(nd2.getKey(), nd.getKey(), 3);
-		g1.connect(nd5.getKey(), nd.getKey(), 0);
-		// System.out.println(g1.isConnected(nd2.getKey()));
-		// g1.draw();
-//		Graph_Algo g = new Graph_Algo(g1);
-		// System.out.println(g.shortestPath(nd3.getKey(), nd3.getKey()));
-		// System.out.println(g.shortestPathDist(nd.getKey(), nd1.getKey()));
-		// System.out.println(g.isConnected());
-		Graph_Algo algo = new Graph_Algo();
-		algo.init(g1);
-		Graph_Algo copy = algo;
-//		System.out.println(algo.isConnected());
-		List<Integer> l = new ArrayList<Integer>();
-		l.add(nd3.getKey());
-		l.add(nd.getKey());
-		// l.add(nd1.getKey());
-		// System.out.println(algo.TSP(l));
-		algo.TSP(l);
-		GUI a = new GUI(g1);
-		// a.draw();
-		// System.out.println(g.shortestPathDist(nd1.getKey(), nd.getKey()));
-		// System.out.println(algo.shortestPath(nd3.getKey(), nd.getKey()));
 	}
 
 }
