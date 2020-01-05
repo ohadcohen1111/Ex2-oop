@@ -5,7 +5,23 @@ import algorithms.Graph_Algo;
 import utils.Point3D;
 import utils.StdDraw;
 
+import java.awt.Frame;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import dataStructure.DGraph;
 import dataStructure.edge_data;
@@ -13,7 +29,7 @@ import dataStructure.graph;
 import dataStructure.nodeData;
 import dataStructure.node_data;
 
-public class GUI {
+public class GUI extends JFrame implements ActionListener, MouseListener {
 	private graph Dgraph;
 	private Graph_Algo g;
 
@@ -21,7 +37,64 @@ public class GUI {
 		this.Dgraph = Dg;
 		Graph_Algo g = new Graph_Algo();
 		g.init(Dgraph);
+		// drawGraph();
+	}
 
+	private void initGUI() {
+		this.setSize(500, 500);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		MenuBar menuBar = new MenuBar();
+		Menu algo = new Menu("Graph-Algo");
+		menuBar.add(algo);
+		this.setMenuBar(menuBar);
+
+		MenuItem draw = new MenuItem("Draw graph");
+		draw.addActionListener(this);
+
+		MenuItem sortPath = new MenuItem("Short-path");
+		sortPath.addActionListener(this);
+
+		algo.add(draw);
+		algo.add(sortPath);
+
+		Menu file = new Menu("file");
+		menuBar.add(file);
+
+		MenuItem save = new MenuItem("save");
+		save.addActionListener(this);
+
+		MenuItem init = new MenuItem("init");
+		init.addActionListener(this);
+
+		file.add(save);
+		file.add(init);
+
+		this.addMouseListener(this);
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		Graph_Algo g = new Graph_Algo();
+		g.init(Dgraph);
+		String str = e.getActionCommand();
+
+		if (str.equals("Draw graph")) {
+			drawGraph();
+		}
+
+		if (str.equals("Short-path")) {
+			shortpath(4, 2);
+
+		}
+
+		if (str.equals("save")) {
+			g.save("C:\\Users\\amite\\Desktop\\test2");
+		}
+
+		if (str.equals("init")) {
+			g.init("C:\\Users\\amite\\Desktop\\test2");
+		}
 	}
 
 	public void setScale() {
@@ -38,10 +111,9 @@ public class GUI {
 		}
 		StdDraw.setXscale(-4, maxX + 7);
 		StdDraw.setYscale(-4, maxY + 7);
-
 	}
 
-	public double equasionY(int x0, int x1, int y0, int y1) {
+	public double equasionY(int x0, int x1, int y0, int y1) { // to find the point of the direction.
 		double f;
 		double yM = y0 - y1;
 		double xM = x0 - x1;
@@ -59,7 +131,7 @@ public class GUI {
 		return 0;
 	}
 
-	public double equasionWegit(int x0, int x1, int y0, int y1) {
+	public double equasionWegit(int x0, int x1, int y0, int y1) { // find the point of the weight.
 		double f;
 		double yM = y0 - y1;
 		double xM = x0 - x1;
@@ -79,10 +151,10 @@ public class GUI {
 		return 0;
 	}
 
-	public void draw() {
+	public void drawGraph() {
 		StdDraw.setCanvasSize(800, 400);
 		setScale();
-		// point
+		// point, vertex
 		for (node_data vertex : this.Dgraph.getV()) {
 			StdDraw.setPenRadius(0.00999);
 			int x = vertex.getLocation().ix();
@@ -93,9 +165,9 @@ public class GUI {
 			point += vertex.getKey();
 			StdDraw.setPenRadius(0.0009);
 			StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
-			StdDraw.text(x, y + 0.5, point);
+			StdDraw.text(x, y + 0.5, point); // the number of the vertex.
 		}
-
+		// edge
 		for (node_data vertex : this.Dgraph.getV()) {
 			Collection<edge_data> edge = this.Dgraph.getE(vertex.getKey());
 			if (edge != null) {
@@ -145,102 +217,100 @@ public class GUI {
 				}
 			}
 		}
+
+	}
+
+	public void shortpath(int src, int dest) {
+		drawGraph();
+		List<node_data> shortPath = new ArrayList<node_data>();
+		Graph_Algo g = new Graph_Algo();
+		g.init(Dgraph);
+		shortPath = g.shortestPath(src, dest);
+		if (shortPath != null) {
+			for (int i = 0; i < shortPath.size() - 1; i++) {
+				int x = shortPath.get(i).getLocation().ix();
+				int y = shortPath.get(i).getLocation().iy();
+//				StdDraw.setPenRadius(0.00999);
+//				StdDraw.setPenColor(StdDraw.RED);
+//				StdDraw.point(x, y);
+				if (shortPath.get(i + 1) != null) {
+					int x1 = shortPath.get(i + 1).getLocation().ix();
+					int y1 = shortPath.get(i + 1).getLocation().iy();
+					StdDraw.setPenRadius(0.00099);
+					StdDraw.setPenColor(StdDraw.GREEN);
+					StdDraw.line(x, y, x1, y1);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 
 	public static void main(String[] args) {
-//		DGraph g1 = new DGraph();
-//		Point3D p = new Point3D(1, 1, 3);
-//		Point3D p1 = new Point3D(1, 4, 3);
-//		Point3D p2 = new Point3D(1, 7, 3);
-//		Point3D p3 = new Point3D(4, 7, 3);
-//		Point3D p4 = new Point3D(4, 3, 3);
-//		Point3D p5 = new Point3D(3, 1, 3);
-//		nodeData nd = new nodeData(p);
-//		nodeData nd1 = new nodeData(p1);
-//		nodeData nd2 = new nodeData(p2);
-//		nodeData nd3 = new nodeData(p3);
-//		nodeData nd4 = new nodeData(p4);
-//		nodeData nd5 = new nodeData(p5);
-//		g1.addNode(nd);
-//		g1.addNode(nd1);
-//		g1.addNode(nd2);
-//		g1.addNode(nd3);
-//		g1.addNode(nd4);
-//		g1.addNode(nd5);
-//		g1.connect(nd3.getKey(), nd1.getKey(), 3);
-//		g1.connect(nd3.getKey(), nd4.getKey(), 0.5);
-//		g1.connect(nd5.getKey(), nd3.getKey(), 5);
-//		g1.connect(nd5.getKey(), nd4.getKey(), 4);
-//		g1.connect(nd4.getKey(), nd2.getKey(), 0.5);
-//		g1.connect(nd5.getKey(), nd.getKey(), 1);
-//		g1.connect(nd2.getKey(), nd1.getKey(), 0.5);
-//		g1.connect(nd.getKey(), nd4.getKey(), 6);
+		DGraph g1 = new DGraph();
+		Point3D p = new Point3D(1, 1, 3);
+		Point3D p1 = new Point3D(1, 4, 3);
+		Point3D p2 = new Point3D(1, 7, 3);
+		Point3D p3 = new Point3D(4, 7, 3);
+		Point3D p4 = new Point3D(4, 3, 3);
+		Point3D p5 = new Point3D(3, 1, 3);
+		nodeData nd = new nodeData(p);
+		nodeData nd1 = new nodeData(p1);
+		nodeData nd2 = new nodeData(p2);
+		nodeData nd3 = new nodeData(p3);
+		nodeData nd4 = new nodeData(p4);
+		nodeData nd5 = new nodeData(p5);
+		g1.addNode(nd);
+		g1.addNode(nd1);
+		g1.addNode(nd2);
+		g1.addNode(nd3);
+		g1.addNode(nd4);
+		g1.addNode(nd5);
+		g1.connect(nd3.getKey(), nd1.getKey(), 3);
+		g1.connect(nd3.getKey(), nd4.getKey(), 0.5);
+		g1.connect(nd5.getKey(), nd3.getKey(), 5);
+		g1.connect(nd5.getKey(), nd4.getKey(), 4);
+		g1.connect(nd4.getKey(), nd2.getKey(), 0.5);
+		g1.connect(nd5.getKey(), nd.getKey(), 1);
+		g1.connect(nd2.getKey(), nd1.getKey(), 0.5);
+		g1.connect(nd.getKey(), nd4.getKey(), 6);
 
 		// g1.draw();
 		// Graph_Algo g = new Graph_Algo();
+		GUI d = new GUI(g1);
+		// d.shortpath(4,2);
+		d.setVisible(true);
+		d.initGUI();
 
-//		DGraph g = new DGraph();
-//		Point3D p = new Point3D(3, 5);
-//		Point3D p1 = new Point3D(1, 4);
-//		Point3D p2 = new Point3D(2, 8);
-//		Point3D p3 = new Point3D(11, 5);
-//
-//		node_data n = new nodeData(p);
-//		node_data n1 = new nodeData(p1);
-//		node_data n2 = new nodeData(p2);
-//		node_data n3 = new nodeData(p3);
-//
-//		node_data[] nodes = { n, n1, n2, n3 };
-//
-//		for (int i = 0; i < nodes.length; i++) {
-//			g.addNode(nodes[i]);
-//		}
-//		for (int i = 0; i < g.nodeSize(); i++) {
-//			for (int j = 1; j < g.nodeSize(); j++) {
-//				if (nodes[i].getKey() != nodes[j].getKey()) {
-//					double weight = (int) (Math.random() * (14 - 1) + 1);
-//					g.connect(nodes[i].getKey(), nodes[j].getKey(), weight);
-//					g.connect(nodes[j].getKey(), nodes[i].getKey(), weight);
-//				}
-//			}
-//		}
+		// d.drawGraph();
 
-		DGraph g = new DGraph();
-		Point3D p = new Point3D(3, 1.7);
-		Point3D p1 = new Point3D(8.12, 6.33);
-		Point3D p2 = new Point3D(2.5, 5);
-		Point3D p3 = new Point3D(11, 7.7);
-		Point3D p4 = new Point3D(2, 2);
-		Point3D p5 = new Point3D(2.5, 12);
-		node_data n = new nodeData(p);
-		node_data n1 = new nodeData(p1);
-		node_data n2 = new nodeData(p2);
-		node_data n3 = new nodeData(p3);
-		node_data n4 = new nodeData(p4);
-		node_data n5 = new nodeData(p5);
-		node_data[] nodes = { n, n1, n2, n3, n4, n5 };
-
-		for (int i = 0; i < nodes.length; i++) {
-			g.addNode(nodes[i]);
-		}
-
-		g.connect(n.getKey(), n1.getKey(), 3);
-		g.connect(n1.getKey(), n2.getKey(), 4);
-		g.connect(n.getKey(), n5.getKey(), 10);
-		g.connect(n.getKey(), n2.getKey(), 2);
-		g.connect(n2.getKey(), n5.getKey(), 5);
-		g.connect(n4.getKey(), n.getKey(), 0.5);
-		g.connect(n4.getKey(), n5.getKey(), 13);
-		g.connect(n3.getKey(), n.getKey(), 4.5);
-		g.connect(n2.getKey(), n4.getKey(), 8);
-		g.connect(n5.getKey(), n4.getKey(), 11);
-		g.connect(n.getKey(), n3.getKey(), 4);
-		g.connect(n1.getKey(), n3.getKey(), 0.5);
-		Graph_Algo ga = new Graph_Algo();
-		ga.init(g);
-		GUI d = new GUI(g);
-		d.draw();
-		System.out.println(ga.isConnected());
-		System.out.println(ga.shortestPath(1, 4));
 	}
 }

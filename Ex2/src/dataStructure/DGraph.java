@@ -1,5 +1,6 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import gui.GUI;
 import utils.Point3D;
 import utils.StdDraw;
 
-public class DGraph implements graph {
+public class DGraph implements graph, Serializable {
 	private HashMap<Integer, node_data> Vertex;
 	private HashMap<Integer, HashMap<Integer, edge_data>> Neib;
 	private int mc;

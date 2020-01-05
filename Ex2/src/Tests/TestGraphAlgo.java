@@ -58,11 +58,13 @@ public class TestGraphAlgo {
 		ga1.init(g);
 		assertTrue(ga1.isConnected());
 
-//		ga.save("Graph_Algo");
-//		Graph_Algo init = new Graph_Algo();
-//		init.init("Graph_Algo");
-//		graph gra = init.copy();
-//		assertEquals(gra.nodeSize(), g.nodeSize());
+		ga.save("Graph_Algo");
+		Graph_Algo init = new Graph_Algo();
+		init.init("Graph_Algo");
+		graph gra = init.copy();
+		assertEquals(gra.nodeSize(), g.nodeSize());
+		assertEquals(gra.edgeSize(), g.edgeSize());
+
 	}
 
 	@Test
@@ -238,7 +240,48 @@ public class TestGraphAlgo {
 
 	@Test
 	public void testTSP() {
-		fail("Not yet implemented");
+		DGraph g = new DGraph();
+		Point3D p1 = new Point3D(1, 1);
+		Point3D p2 = new Point3D(5, 1);
+		Point3D p3 = new Point3D(1, 5);
+		Point3D p4 = new Point3D(5, 5);
+
+		node_data n1 = new nodeData(p1);
+		node_data n2 = new nodeData(p2);
+		node_data n3 = new nodeData(p3);
+		node_data n4 = new nodeData(p4);
+
+		node_data[] nodes = { n1, n2, n3, n4 };
+		for (int i = 0; i < nodes.length; i++) {
+			g.addNode(nodes[i]);
+		}
+		g.connect(1, 2, 1);
+		g.connect(1, 4, 5);
+		g.connect(1, 3, 8);
+
+		g.connect(2, 3, 5);
+		g.connect(2, 4, 1);
+		g.connect(2, 1, 7);
+
+		g.connect(3, 1, 4);
+		g.connect(3, 4, 1);
+
+		g.connect(4, 3, 3);
+
+		Graph_Algo ga = new Graph_Algo();
+		ga.init(g);
+		List<Integer> targets = new ArrayList<Integer>();
+		targets.add(1);
+		targets.add(4);
+		targets.add(3);
+
+		List<node_data> expected = new ArrayList<node_data>();
+		expected.add(n1);
+		expected.add(n2);
+		expected.add(n4);
+		expected.add(n3);
+
+		assertEquals(ga.TSP(targets), expected);
 	}
 
 }

@@ -38,12 +38,12 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	}
 
 	public void init(String file_name) {
-		graph g = null;
+		Dgraph = null;
 		try {
 			FileInputStream file = new FileInputStream(file_name);
 			ObjectInputStream in = new ObjectInputStream(file);
 
-			g = (graph) in.readObject();
+			Dgraph = (graph) in.readObject();
 
 			in.close();
 			file.close();
@@ -164,25 +164,66 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		if (!this.isConnected()) {
 			return null;
 		}
-		double minDist = INFINITE;
 		List<node_data> res = new ArrayList<node_data>();
-		int[][] greatPath = new int[2][targets.size() - 1];
-		List<node_data> smallestPath = new ArrayList<node_data>();
-		Collection<node_data> vertex = this.Dgraph.getV();
-		for (int i = 0; i < targets.size(); i++) {
+		List<node_data> tmpRes = new ArrayList<node_data>();
+		double currentDist = INFINITE;
+		int src = 0;
+		int dest = 0;
+		int from = 0;
+		for (int i = 0; i <= targets.size(); i++) {
+			double minDist = INFINITE;
 			for (int j = 0; j < targets.size(); j++) {
-				double currentRes = shortestPathDist(targets.get(i), targets.get(j));
-				if (currentRes < minDist && currentRes != 0) {
-					minDist = currentRes;
-					smallestPath = shortestPath(targets.get(i), targets.get(j));
-					greatPath[0][i] = targets.get(i);
-					greatPath[1][i] = targets.get(j);
+				if (i != 0) {
+					from = res.get(res.size() - 1).getKey();
+				} else {
+					from = targets.get(i);
+				}
+				currentDist = shortestPathDist(from, targets.get(j));
+				if (currentDist < minDist && currentDist != 0) {
+					minDist = currentDist;
+					tmpRes = shortestPath(from, targets.get(j));
+					if (targets.size() == 1) {
+						i = 0;
+					}
+					src = targets.get(i);
+					dest = targets.get(j);
 				}
 			}
-			targets.remove(i);
+			res = copyPath(res, tmpRes);
+			targets = remove(targets, src, dest);
 		}
 
-		return null;
+		return res;
+	}
+
+	public List<Integer> remove(List<Integer> targets, int src, int dest) {
+
+		for (int i = 0; i < targets.size(); i++) {
+
+			if (targets.get(i) == dest) {
+				targets.remove(i);
+			}
+		}
+		for (int i = 0; i < targets.size(); i++) {
+
+			if (targets.get(i) == src) {
+				targets.remove(i);
+			}
+
+		}
+
+		return targets;
+	}
+
+	public List<node_data> copyPath(List<node_data> res, List<node_data> tmp) {
+		for (int i = 0; i < tmp.size(); i++) {
+			if (!res.isEmpty() && i == 0) {
+				;
+			} else {
+				res.add(tmp.get(i));
+			}
+		}
+		return res;
 	}
 
 	@Override
