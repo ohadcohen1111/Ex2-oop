@@ -25,4 +25,4 @@ Graph-Algo represents the "regular" Graph Theory algorithms including:
   
   **package gui:**    
 
-  **GUI**: displays a graph, saves it, and runs algorithms on it.
+  **GUI**: displays a graph, saves it, init , add/remove vertex, add/remove edge and runs algorithms on it.
