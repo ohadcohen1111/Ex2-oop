@@ -45,17 +45,18 @@ public class DGraph implements graph, Serializable {
 		if (src == dest) {
 			throw new RuntimeException("Its impossible to connect a vertex to itself");
 		}
-		if (this.Vertex.containsKey(src) && this.Vertex.containsKey(dest)) { // check if the vertex are exists
-			node_data s = this.Vertex.get(src);
-			node_data d = this.Vertex.get(dest);
-			edge_data e = new edgeData(s, d, w);
-			if (this.Neib.get(src) == null) {
-				HashMap<Integer, edge_data> t = new HashMap<>(); // add new neighbor
-				t.put(dest, e);
-				this.Neib.put(src, t);
-			} else {
-				this.Neib.get(src).put(dest, e);
-			}
+		if ((!this.Vertex.containsKey(src)) || (!this.Vertex.containsKey(dest))) { // check if the vertex are exists
+			throw new RuntimeException("The vertex doesnt exists");
+		}
+		node_data s = this.Vertex.get(src);
+		node_data d = this.Vertex.get(dest);
+		edge_data e = new edgeData(s, d, w);
+		if (this.Neib.get(src) == null) {
+			HashMap<Integer, edge_data> t = new HashMap<>(); // add new neighbor
+			t.put(dest, e);
+			this.Neib.put(src, t);
+		} else {
+			this.Neib.get(src).put(dest, e);
 		}
 		mc++;
 	}
@@ -77,7 +78,7 @@ public class DGraph implements graph, Serializable {
 	@Override
 	public node_data removeNode(int key) {
 		if (!Vertex.containsKey(key)) {
-			return null;
+			throw new RuntimeException("The vertex doesnt exists");
 		}
 		node_data nd = Vertex.get(key);
 		for (HashMap edge : Neib.values()) {
@@ -93,9 +94,11 @@ public class DGraph implements graph, Serializable {
 
 	@Override
 	public edge_data removeEdge(int src, int dest) {
-		if (Neib.get(src).containsKey(dest)) {
-			mc++;
-			return Neib.get(src).remove(dest);
+		if (Neib.containsKey(src)) {
+			if (Neib.get(src).containsKey(dest)) {
+				mc++;
+				return Neib.get(src).remove(dest);
+			}
 		}
 		throw new RuntimeException("The egde doesnt exists");
 	}

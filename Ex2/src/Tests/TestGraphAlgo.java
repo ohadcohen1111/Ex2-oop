@@ -276,10 +276,10 @@ public class TestGraphAlgo {
 		targets.add(3);
 
 		List<node_data> expected = new ArrayList<node_data>();
-		expected.add(n1);
-		expected.add(n2);
+		expected.add(n3);
 		expected.add(n4);
 		expected.add(n3);
+		expected.add(n1);
 
 		assertEquals(ga.TSP(targets), expected);
 	}

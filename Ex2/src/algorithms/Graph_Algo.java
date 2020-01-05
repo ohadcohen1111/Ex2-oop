@@ -98,6 +98,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		Collection<node_data> vertex = this.Dgraph.getV();
+		if (!vertex.contains(Dgraph.getNode(src)) || (!vertex.contains(Dgraph.getNode(dest)))) {
+			throw new RuntimeException("The vertex not exits");
+		}
 		for (node_data ver : vertex) {
 			ver.setTag(0);
 			ver.setInfo("");
@@ -167,51 +170,61 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		List<node_data> res = new ArrayList<node_data>();
 		List<node_data> tmpRes = new ArrayList<node_data>();
 		double currentDist = INFINITE;
-		int src = 0;
 		int dest = 0;
-		int from = 0;
-		for (int i = 0; i <= targets.size(); i++) {
+		int from = firesIterationTSP(targets);
+		int i = 0;
+		while (!targets.isEmpty()) {
 			double minDist = INFINITE;
 			for (int j = 0; j < targets.size(); j++) {
-				if (i != 0) {
+				if (!res.isEmpty()) {
 					from = res.get(res.size() - 1).getKey();
 				} else {
-					from = targets.get(i);
+					if (i > 0) {
+						from = targets.get(i);
+					}
 				}
 				currentDist = shortestPathDist(from, targets.get(j));
 				if (currentDist < minDist && currentDist != 0) {
 					minDist = currentDist;
 					tmpRes = shortestPath(from, targets.get(j));
-					if (targets.size() == 1) {
-						i = 0;
-					}
-					src = targets.get(i);
 					dest = targets.get(j);
 				}
 			}
+			if (i == 0) {
+				targets = remove(targets, from);
+
+			}
+			i++;
 			res = copyPath(res, tmpRes);
-			targets = remove(targets, src, dest);
+			targets = remove(targets, dest);
 		}
 
 		return res;
 	}
 
-	public List<Integer> remove(List<Integer> targets, int src, int dest) {
+	public int firesIterationTSP(List<Integer> targets) {
+		double currentDist = INFINITE;
+		double minPath = INFINITE;
+		int vertex = 0;
+		for (int i = 0; i < targets.size(); i++) {
+			for (int j = 0; j < targets.size(); j++) {
+				currentDist = shortestPathDist(targets.get(i), targets.get(j));
+				if (currentDist < minPath && currentDist != 0) {
+					minPath = currentDist;
+					vertex = targets.get(i);
+				}
+			}
+		}
+		return vertex;
+	}
+
+	public List<Integer> remove(List<Integer> targets, int dest) {
 
 		for (int i = 0; i < targets.size(); i++) {
-
 			if (targets.get(i) == dest) {
 				targets.remove(i);
 			}
 		}
-		for (int i = 0; i < targets.size(); i++) {
-
-			if (targets.get(i) == src) {
-				targets.remove(i);
-			}
-
-		}
-
 		return targets;
 	}
 
