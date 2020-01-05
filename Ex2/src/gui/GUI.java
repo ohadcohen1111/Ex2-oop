@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import dataStructure.DGraph;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.nodeData;
@@ -35,10 +36,12 @@ import dataStructure.node_data;
 public class GUI extends JFrame implements ActionListener, MouseListener {
 	private graph Dgraph;
 	private Graph_Algo g = new Graph_Algo();
+	private int mc;
 
 	public GUI(graph Dg) {
 		this.Dgraph = Dg;
 		g.init(Dgraph);
+		this.mc = Dgraph.getMC();
 		initGUI();
 	}
 
@@ -103,6 +106,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 
 		this.addMouseListener(this);
 		setVisible(true);
+
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					synchronized (this) {
+						if (Dgraph.getMC() != mc) {
+							drawGraph();
+							mc = Dgraph.getMC();
+						}
+					}
+				}
+			}
+		});
+
+		t.start();
 
 	}
 
@@ -180,6 +199,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			@Override
 			public boolean accept(File dir, String name) {
 				return name.endsWith(".txt");
+
 			}
 		});
 
@@ -730,4 +750,5 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 		;
 	}
+
 }
