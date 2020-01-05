@@ -27,7 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dataStructure.DGraph;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.nodeData;
@@ -40,6 +39,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	public GUI(graph Dg) {
 		this.Dgraph = Dg;
 		g.init(Dgraph);
+		initGUI();
 	}
 
 	private void initGUI() {
@@ -102,6 +102,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		algoFunc.add(TSP);
 
 		this.addMouseListener(this);
+		setVisible(true);
 
 	}
 

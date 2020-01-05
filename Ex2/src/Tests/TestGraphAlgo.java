@@ -255,18 +255,19 @@ public class TestGraphAlgo {
 		for (int i = 0; i < nodes.length; i++) {
 			g.addNode(nodes[i]);
 		}
-		g.connect(1, 2, 1);
-		g.connect(1, 4, 5);
-		g.connect(1, 3, 8);
 
-		g.connect(2, 3, 5);
-		g.connect(2, 4, 1);
-		g.connect(2, 1, 7);
+		g.connect(n1.getKey(), n2.getKey(), 1);
+		g.connect(n1.getKey(), n4.getKey(), 5);
+		g.connect(n1.getKey(), n3.getKey(), 8);
 
-		g.connect(3, 1, 4);
-		g.connect(3, 4, 1);
+		g.connect(n2.getKey(), n3.getKey(), 5);
+		g.connect(n2.getKey(), n4.getKey(), 1);
+		g.connect(n2.getKey(), n1.getKey(), 7);
 
-		g.connect(4, 3, 3);
+		g.connect(n3.getKey(), n1.getKey(), 4);
+		g.connect(n3.getKey(), n4.getKey(), 1);
+
+		g.connect(n4.getKey(), n3.getKey(), 3);
 
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(g);

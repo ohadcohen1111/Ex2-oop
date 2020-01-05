@@ -1,7 +1,5 @@
 package algorithms;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,16 +8,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import dataStructure.DGraph;
-import dataStructure.edgeData;
 import dataStructure.edge_data;
 import dataStructure.graph;
-import dataStructure.nodeData;
 import dataStructure.node_data;
-import utils.Point3D;
-import gui.GUI;
 
 /**
  * This empty class represents the set of graph-theory algorithms which should
@@ -31,6 +24,14 @@ import gui.GUI;
 public class Graph_Algo implements graph_algorithms, Serializable {
 	final int INFINITE = Integer.MAX_VALUE;
 	private graph Dgraph;
+
+	public Graph_Algo() {
+		;
+	}
+
+	public Graph_Algo(graph g) {
+		init(g);
+	}
 
 	@Override
 	public void init(graph g) {
@@ -171,7 +172,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		List<node_data> tmpRes = new ArrayList<node_data>();
 		double currentDist = INFINITE;
 		int dest = 0;
-		int from = firesIterationTSP(targets);
+		int from = firstIterationTSP(targets);
 		int i = 0;
 		while (!targets.isEmpty()) {
 			double minDist = INFINITE;
@@ -202,7 +203,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		return res;
 	}
 
-	public int firesIterationTSP(List<Integer> targets) {
+	public int firstIterationTSP(List<Integer> targets) {
 		double currentDist = INFINITE;
 		double minPath = INFINITE;
 		int vertex = 0;

@@ -9,6 +9,7 @@ import org.junit.Test;
 import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import dataStructure.edgeData;
+import dataStructure.graph;
 import dataStructure.nodeData;
 import dataStructure.node_data;
 import gui.GUI;
@@ -17,7 +18,7 @@ import utils.Point3D;
 public class TestDGraph {
 
 	@Test
-	public void testAddNode() {
+	public void test_Add_Remove_Node() {
 		DGraph g = new DGraph();
 		Point3D p = new Point3D(5, 7);
 		Point3D p1 = new Point3D(2.3, 4.6);
@@ -50,6 +51,41 @@ public class TestDGraph {
 			assertEquals(node_size--, g.nodeSize());
 			g.removeNode(nodes[j].getKey());
 		}
+	}
+
+	@Test
+	public void get_Edge_get_Vertex() {
+		DGraph g = new DGraph();
+		Point3D p = new Point3D(3, 1.7);
+		Point3D p1 = new Point3D(8.12, 1.33);
+		Point3D p2 = new Point3D(2.5, 5);
+
+		node_data n = new nodeData(p);
+		node_data n1 = new nodeData(p1);
+		node_data n2 = new nodeData(p2);
+
+		node_data[] nodes = { n, n1, n2 };
+
+		for (int i = 0; i < nodes.length; i++) {
+			g.addNode(nodes[i]);
+		}
+
+		edgeData e = new edgeData(n, n1, 6);
+		edgeData e1 = new edgeData(n1, n2, 11.2);
+		edgeData e3 = new edgeData(n, n2, 6);
+
+		g.connect(n.getKey(), n1.getKey(), 6);
+		g.connect(n1.getKey(), n2.getKey(), 11.2);
+		g.connect(n.getKey(), n2.getKey(), 6);
+
+		assertEquals(n.getKey(), e.getSrc());
+		assertEquals(n1.getKey(), e.getDest());
+
+		assertEquals(n1.getKey(), e1.getSrc());
+		assertEquals(n2.getKey(), e1.getDest());
+
+		assertEquals(n.getKey(), e3.getSrc());
+		assertEquals(n2.getKey(), e3.getDest());
 	}
 
 	@Test
